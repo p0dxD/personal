@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <Script
         async
         src="https://analytics.jobsentry.net/script.js"
-        data-website-id="PLACEHOLDER_JOSEROD_SPACE"
+        data-website-id="25ea0a7e-6445-495e-bed5-1695e23425dc"
       />
     </html>
   );

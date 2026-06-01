@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: podoi-website
+  namespace: podoi
+  labels:
+    app: podoi-website
+spec:
+  type: ClusterIP
+  selector:
+    app: podoi-website
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP

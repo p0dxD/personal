@@ -1,0 +1,9 @@
+projects:
+  - name: podoi-website
+    path: .
+    image: registry.cube.local:5000/podoi-website
+    kustomization: argocd/kustomization.yaml
+    stages:
+      build:
+        tool: none
+      docker: {}

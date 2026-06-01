@@ -3,24 +3,24 @@ const applications = [
     name: "JobSentry",
     url: "https://jobsentry.net",
     description:
-      "AI-powered platform that detects fraudulent job postings using NLP and domain analysis. Protects job seekers from scams in real time.",
-    tags: ["AI/LLM", "FastAPI", "React", "Kubernetes"],
+      "Multi-service scam-detection platform for job postings. A React frontend routes through a Node.js gateway to two specialized backends: a Quarkus/Java service for WHOIS domain-age lookups and a FastAPI service that streams LLM analysis via a local Ollama instance on a Jetson Orin Nano. Flags suspicious postings in seconds using domain age, linguistic red flags, and recruiter patterns.",
+    tags: ["AI/LLM", "FastAPI", "Quarkus", "React", "Ollama", "Kubernetes"],
     status: "Live",
   },
   {
     name: "Wellness Portal",
     url: "https://wellbeingportal.app",
     description:
-      "Personal wellness tracking app with AI-driven insights. Log symptoms, moods, and habits — get personalized recommendations powered by a local LLM.",
-    tags: ["AI/LLM", "Ollama", "FastAPI", "React"],
+      "Personal wellness tracking app where users log symptoms, moods, sleep, and daily habits. A FastAPI backend aggregates the entries and sends them to a locally-hosted LLM (Ollama on Jetson Orin Nano) to generate personalized pattern insights — no data ever leaves the home lab.",
+    tags: ["AI/LLM", "Ollama", "FastAPI", "React", "PostgreSQL"],
     status: "Live",
   },
   {
-    name: "StockPulse",
-    url: "https://stockpulse.joserod.space",
+    name: "StockFinancia",
+    url: "https://stockfinancia.com",
     description:
-      "Personal finance dashboard that tracks up to two stocks with real-time price charts, technical indicators (RSI, MACD, EMA), and a composite feel score that signals buy, hold, or caution.",
-    tags: ["FastAPI", "React", "Recharts", "yfinance"],
+      "Personal finance dashboard with a composite PulseScore (1–10) built from RSI, MACD, EMA crossovers, Bollinger Bands, options flow, insider activity, and earnings proximity. Tracks watchlist stocks with intraday snapshots, 7/30/90-day verdict accuracy tracking, a paper trading ledger, AI-powered chat analysis, and real-time WebSocket announcements. Fully self-hosted on Kubernetes.",
+    tags: ["FastAPI", "React", "PostgreSQL", "yfinance", "APScheduler", "WebSocket"],
     status: "Live",
   },
 ];
@@ -29,26 +29,26 @@ const infrastructure = [
   {
     name: "K3s Home Lab",
     description:
-      "Self-hosted 5-node Raspberry Pi Kubernetes cluster running 15+ production services: ArgoCD, Longhorn, MinIO, Fission, Grafana, Prometheus, and more.",
-    tags: ["Kubernetes", "Raspberry Pi", "ArgoCD", "GitOps"],
+      "Self-hosted 5-node Raspberry Pi cluster (1 control plane + 4 workers) running Kubernetes via k3s. Hosts 15+ production services: ArgoCD for GitOps deployments, Longhorn for distributed block storage, MinIO for S3-compatible object storage, Grafana + Prometheus for observability, Umami for privacy-first analytics, and a private Docker registry. All nodes run ARM64 with persistent storage across reboots.",
+    tags: ["k3s", "Raspberry Pi", "ArgoCD", "Longhorn", "MinIO", "GitOps"],
   },
   {
     name: "CI/CD Pipeline",
     description:
-      "Jenkins shared-library pipeline with multi-project support, parallel builds and tests, BuildKit image caching, automated Git tag bumping, and GitHub commit status reporting.",
-    tags: ["Jenkins", "Docker", "BuildKit", "Shared Library"],
+      "Jenkins shared-library pipeline that handles all projects from a single Jenkinsfile template. Runs parallel build + test stages using Docker BuildKit with layer caching, automatically bumps semantic image tags in kustomization.yaml, reports commit statuses back to GitHub, and triggers ArgoCD syncs. SCM polling every 10 minutes with webhook fallback.",
+    tags: ["Jenkins", "Docker", "BuildKit", "ArgoCD", "Kustomize", "GitHub"],
   },
   {
     name: "AI Inference Node",
     description:
-      "NVIDIA Jetson Orin Nano configured as a dedicated edge AI node running Ollama (llama3.2). Serves LLM inference requests to Wellness Portal and other cluster services.",
-    tags: ["NVIDIA", "Ollama", "LLM", "Edge AI"],
+      "NVIDIA Jetson Orin Nano (8 GB, 1024-core Ampere GPU) configured as a dedicated edge inference node. Runs Ollama serving llama3.2:3b with GPU acceleration via the NVIDIA container runtime. Receives inference requests from JobSentry's linguistic service and Wellness Portal over the cluster's internal network — fully air-gapped LLM inference with no external API costs.",
+    tags: ["NVIDIA Jetson", "Ollama", "LLM", "Edge AI", "CUDA", "Kubernetes"],
   },
   {
     name: "Observability Stack",
     description:
-      "Grafana + Prometheus monitoring across all cluster nodes with custom dashboards for resource usage, application metrics, and alerting.",
-    tags: ["Grafana", "Prometheus", "Monitoring", "Kubernetes"],
+      "Grafana + Prometheus deployed via Helm across all cluster nodes. Custom dashboards track CPU/memory per node, container restart rates, Longhorn volume health, and application-level metrics. Alertmanager routes critical alerts. Umami provides privacy-first web analytics for all public-facing apps without third-party data sharing.",
+    tags: ["Grafana", "Prometheus", "Alertmanager", "Umami", "Helm"],
   },
 ];
 

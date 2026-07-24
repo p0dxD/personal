@@ -5,6 +5,11 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
+- postgres-pvc.yaml
+- postgres-deployment.yaml
+- postgres-service.yaml
+- postgres-init-configmap.yaml
+- website-contact-sealedsecret.yaml
 images:
 - name: registry.cube.local:5000/podoi-website
   newTag: 1.0.0

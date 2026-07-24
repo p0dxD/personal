@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/p0dxD/joserod.space.git
+    repoURL: https://github.com/p0dxD/personal.git
     targetRevision: main
     path: argocd
   destination:

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: podoi-website
+  namespace: podoi
+  labels:
+    app: podoi-website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: podoi-website
+  template:
+    metadata:
+      labels:
+        app: podoi-website
+    spec:
+      containers:
+        - name: podoi-website
+          image: 192.168.50.80:5000/podoi-tech-website:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: website-contact-secret
+                optional: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10

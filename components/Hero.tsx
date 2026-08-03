@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
@@ -33,6 +35,12 @@ export default function Hero() {
           >
             View Projects
           </a>
+          <Link
+            href="/blog"
+            className="glass glass-hover rounded-xl px-7 py-3 text-sm font-semibold text-slate-200 shadow"
+          >
+            Blog
+          </Link>
           <a
             href="https://jobsentry.net"
             target="_blank"

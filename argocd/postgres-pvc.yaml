@@ -5,6 +5,8 @@ metadata:
   namespace: podoi
   labels:
     app: blog-postgres
+    recurring-job.longhorn.io/source: enabled
+    recurring-job-group.longhorn.io/backup-postgres: enabled
 spec:
   accessModes:
     - ReadWriteOnce

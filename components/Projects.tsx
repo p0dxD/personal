@@ -25,6 +25,16 @@ const applications = [
   },
 ];
 
+const inProgress = [
+  {
+    name: "SimpleRFC",
+    url: "https://simplerfc.joserod.space",
+    description:
+      "Makes IETF RFCs easier to read: enter an RFC number or search by title and get plain-language section summaries, ASCII-art diagrams re-rendered as real Mermaid diagrams, and a glossary of key terms alongside the original text. Processed on demand via a local Ollama LLM and cached in SQLite.",
+    tags: ["AI/LLM", "Next.js", "Ollama", "SQLite"],
+  },
+];
+
 const infrastructure = [
   {
     name: "K3s Home Lab",
@@ -81,6 +91,57 @@ export default function Projects() {
               </h3>
               <span className="shrink-0 rounded-full bg-emerald-500/15 px-2.5 py-0.5 text-xs font-medium text-emerald-400 border border-emerald-500/30">
                 {project.status}
+              </span>
+            </div>
+
+            <p className="text-sm text-slate-400 leading-relaxed flex-1">
+              {project.description}
+            </p>
+
+            <div className="flex flex-wrap gap-2 mt-auto">
+              {project.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-lg bg-violet-500/10 border border-violet-500/20 px-2.5 py-0.5 text-xs text-violet-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <span className="text-xs text-slate-500 group-hover:text-cyan-400 transition-colors">
+              {project.url.replace("https://", "")} ↗
+            </span>
+          </a>
+        ))}
+      </div>
+
+      {/* In Progress */}
+      <div className="mb-14 text-center">
+        <span className="inline-block mb-3 rounded-full border border-amber-500/40 bg-amber-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-amber-300">
+          In Progress
+        </span>
+        <h2 className="text-3xl font-bold gradient-text">What I&apos;m Building Now</h2>
+        <p className="mt-3 text-slate-400 max-w-lg mx-auto">
+          Live previews hosted directly on joserod.space subdomains — still being built.
+        </p>
+      </div>
+
+      <div className="grid gap-6 sm:grid-cols-2 mb-16">
+        {inProgress.map((project) => (
+          <a
+            key={project.name}
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass glass-hover rounded-2xl p-7 flex flex-col gap-4 group"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <h3 className="text-xl font-bold text-white group-hover:gradient-text transition-all">
+                {project.name}
+              </h3>
+              <span className="shrink-0 rounded-full bg-amber-500/15 px-2.5 py-0.5 text-xs font-medium text-amber-400 border border-amber-500/30">
+                In Progress
               </span>
             </div>
 

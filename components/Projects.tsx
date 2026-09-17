@@ -33,6 +33,13 @@ const inProgress = [
       "Makes IETF RFCs easier to read: enter an RFC number or search by title and get plain-language section summaries, ASCII-art diagrams re-rendered as real Mermaid diagrams, and a glossary of key terms alongside the original text. Processed on demand via a local Ollama LLM and cached in SQLite.",
     tags: ["AI/LLM", "Next.js", "Ollama", "SQLite"],
   },
+  {
+    name: "SecPlus Study Guide",
+    url: "https://secplus.joserod.space",
+    description:
+      "Study site for the CompTIA Security+ SY0-701 exam: notes broken down per exam objective with a quiz at the end of every section, whole-domain quizzes, timed 90-question mock exams weighted like the real test, acronym flashcards, and dense cheat sheets. All content is versioned markdown/JSON; progress is kept in the browser.",
+    tags: ["Next.js", "TypeScript", "Study Guide", "Security+"],
+  },
 ];
 
 const infrastructure = [

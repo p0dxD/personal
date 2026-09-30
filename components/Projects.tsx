@@ -27,6 +27,13 @@ const applications = [
 
 const inProgress = [
   {
+    name: "rendimiento.ai",
+    url: "https://github.com/p0dxD/rendimiento.ai",
+    description:
+      "My own CI/CD platform, replacing Jenkins and ArgoCD on the home lab: connect a GitHub repo, press Deploy, get a live HTTPS URL. A single Go binary detects the stack, builds images on a BuildKit pool spread across the cluster, and a Kubernetes controller deploys, self-heals and rolls back every release. It also installs cluster add-ons from Helm charts and git, wires in Postgres or Redis on request, and runs commands like mobile builds as CI steps. Every app on this site now ships through it.",
+    tags: ["Go", "Kubernetes", "Controllers", "BuildKit", "React", "GitOps"],
+  },
+  {
     name: "SimpleRFC",
     url: "https://simplerfc.joserod.space",
     description:

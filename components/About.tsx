@@ -1,6 +1,6 @@
 const skills = [
   "AI / LLMs", "Next.js", "TypeScript",
-  "Kubernetes", "ArgoCD", "Docker",
+  "Kubernetes", "Go", "Docker",
   "Python", "Node.js", "PostgreSQL",
 ];
 
@@ -28,7 +28,8 @@ export default function About() {
           </p>
           <p>
             I run a self-hosted infrastructure stack on Kubernetes (k3s), ship
-            continuously with ArgoCD, and obsess over clean, maintainable code.
+            continuously through rendimiento.ai, a CI/CD platform I built myself,
+            and obsess over clean, maintainable code.
           </p>
         </div>
 

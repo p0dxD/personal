@@ -53,26 +53,38 @@ const infrastructure = [
   {
     name: "K3s Home Lab",
     description:
-      "Self-hosted 5-node Raspberry Pi cluster (1 control plane + 4 workers) running Kubernetes via k3s. Hosts 15+ production services: ArgoCD for GitOps deployments, Longhorn for distributed block storage, MinIO for S3-compatible object storage, Grafana + Prometheus for observability, Umami for privacy-first analytics, and a private Docker registry. All nodes run ARM64 with persistent storage across reboots.",
-    tags: ["k3s", "Raspberry Pi", "ArgoCD", "Longhorn", "MinIO", "GitOps"],
+      "Six-node ARM64 Kubernetes cluster running k3s: five Raspberry Pi 4s (8 GB each; one control plane, four workers) plus an NVIDIA Jetson Orin Nano for GPU work, with about 120 pods across a dozen apps. Longhorn replicates block storage across nodes, MinIO provides S3-compatible storage for backups, MetalLB hands out addresses on the home network, and a private registry holds every image.",
+    tags: ["k3s", "Raspberry Pi", "Longhorn", "MinIO", "MetalLB", "ARM64"],
   },
   {
-    name: "CI/CD Pipeline",
+    name: "CI/CD with rendimiento.ai",
     description:
-      "Jenkins shared-library pipeline that handles all projects from a single Jenkinsfile template. Runs parallel build + test stages using Docker BuildKit with layer caching, automatically bumps semantic image tags in kustomization.yaml, reports commit statuses back to GitHub, and triggers ArgoCD syncs. SCM polling every 10 minutes with webhook fallback.",
-    tags: ["Jenkins", "Docker", "BuildKit", "ArgoCD", "Kustomize", "GitHub"],
+      "Every app here ships through rendimiento.ai, the platform I built to replace Jenkins and ArgoCD. A push runs tests and builds as Kubernetes pods; images build on a BuildKit pool spread across the workers with a shared registry cache, and only the services whose code changed are rebuilt. Releases are pinned by image digest, deployed and self-healed by a controller, and roll back in one click. Cluster software is installed from a GitOps repo, and Renovate keeps dependencies current.",
+    tags: ["rendimiento.ai", "Go", "BuildKit", "GitOps", "Renovate", "Kubernetes"],
   },
   {
     name: "AI Inference Node",
     description:
-      "NVIDIA Jetson Orin Nano (8 GB, 1024-core Ampere GPU) configured as a dedicated edge inference node. Runs Ollama serving llama3.2:3b with GPU acceleration via the NVIDIA container runtime. Receives inference requests from JobSentry's linguistic service and Wellness Portal over the cluster's internal network — fully air-gapped LLM inference with no external API costs.",
+      "NVIDIA Jetson Orin Nano (8 GB, 1024-core Ampere GPU) joined to the cluster as its GPU node. Runs Ollama serving llama3.2:3b with CUDA through the NVIDIA container runtime; an app gets the GPU with one line in its deploy file. JobSentry and Wellness Portal call it over the cluster's internal network: no external API costs, and no data leaves the home lab.",
     tags: ["NVIDIA Jetson", "Ollama", "LLM", "Edge AI", "CUDA", "Kubernetes"],
   },
   {
     name: "Observability Stack",
     description:
-      "Grafana + Prometheus deployed via Helm across all cluster nodes. Custom dashboards track CPU/memory per node, container restart rates, Longhorn volume health, and application-level metrics. Alertmanager routes critical alerts. Umami provides privacy-first web analytics for all public-facing apps without third-party data sharing.",
-    tags: ["Grafana", "Prometheus", "Alertmanager", "Umami", "Helm"],
+      "VictoriaMetrics (a Prometheus-compatible stack with vmagent, vmalert and Alertmanager) and Grafana, installed with Helm, track every node, pod and Longhorn volume. Grafana stays on the home network only. Umami provides privacy-first analytics for the public sites, and a Hajimari start page links every internal tool.",
+    tags: ["VictoriaMetrics", "Grafana", "Alertmanager", "Umami", "Helm"],
+  },
+  {
+    name: "Automation & Resilience",
+    description:
+      "Ansible manages every node. A weekly timer applies OS updates one node at a time (health check, cordon, drain, reboot, wait for Ready) and emails a summary. A storm watcher checks National Weather Service alerts every 10 minutes; before severe weather it pauses deployments, scales databases down cleanly and powers the cluster off in order, control plane last.",
+    tags: ["Ansible", "systemd", "Python", "Pi-hole", "Automation"],
+  },
+  {
+    name: "Edge & Security",
+    description:
+      "Public traffic reaches the cluster only through Cloudflare's proxy; ingress-nginx and cert-manager serve every site over HTTPS with Let's Encrypt certificates issued by DNS challenge. Secrets live in git encrypted with sealed-secrets, build pods run isolated from the cluster and home network, and the rendimiento dashboard signs in through GitHub.",
+    tags: ["Cloudflare", "cert-manager", "ingress-nginx", "Sealed Secrets", "Let's Encrypt"],
   },
 ];
 

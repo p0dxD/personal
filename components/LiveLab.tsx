@@ -78,7 +78,7 @@ export default async function LiveLab() {
   const withMonth = sites.filter((x) => x.uptime30d !== undefined && x.uptime30d !== null);
   const avg30 = withMonth.length ? withMonth.reduce((a, x) => a + (x.uptime30d ?? 0), 0) / withMonth.length : undefined;
   const buildRate = d.builds ? d.buildsSucceeded / d.builds : undefined;
-  const nodes = [...s.cluster.nodes].sort((a, b) => (a.role === b.role ? a.name.localeCompare(b.name) : a.role === "control-plane" ? -1 : 1));
+  const nodes = [...s.cluster.nodes].sort((a, b) => (a.role === b.role ? a.label.localeCompare(b.label, undefined, { numeric: true }) : a.role === "control-plane" ? -1 : 1));
   // Daily cells once there are two weeks of history; hourly until then.
   const historyDays = Math.max(0, ...sites.map((x) => x.daily.filter((c) => c.uptime !== undefined && c.uptime !== null).length));
   const hourly = historyDays < 14 && sites.every((x) => x.hourly?.length);
@@ -133,7 +133,7 @@ export default async function LiveLab() {
             </div>
           </div>
           <p className="mt-4 text-xs leading-relaxed text-slate-500">
-            Every push to main is tested, built on a BuildKit pool across the Pis, released, and watched for 5 minutes; a release that breaks a site is rolled back on its own.
+            Every push is tested, built, released and then watched; a release that breaks a site is rolled back on its own.
           </p>
         </div>
         <div className="glass rounded-2xl p-6 md:col-span-2">
@@ -189,18 +189,18 @@ export default async function LiveLab() {
       <div className="glass rounded-2xl p-6">
         <div className="mb-5 flex flex-wrap items-baseline justify-between gap-2">
           <h3 className="font-semibold text-white">The cluster</h3>
-          <span className="text-xs text-slate-500">{s.cluster.distribution} {s.cluster.version.replace(/\+.*/, "")} · {nodes.length} nodes · {s.cluster.pods} pods · {s.cluster.apps} apps</span>
+          <span className="text-xs text-slate-500">{nodes.length} nodes · {s.cluster.pods} pods · {s.cluster.apps} apps</span>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {nodes.map((n) => (
-            <div key={n.name} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+            <div key={n.label} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
               <div className="flex items-center justify-between">
-                <span className="font-mono text-sm text-slate-200">{n.name}</span>
+                <span className="text-sm font-medium capitalize text-slate-200">{n.label}</span>
                 <span className={`rounded-full px-2 py-0.5 text-[11px] ${n.ready ? "bg-emerald-500/10 text-emerald-300" : "bg-red-500/10 text-red-300"}`}>
                   {n.ready ? "Ready" : "Not ready"}
                 </span>
               </div>
-              <div className="mt-1 text-xs text-slate-500">{hardware(n)} · {n.role === "control-plane" ? "control plane" : "worker"} · {n.pods} pods</div>
+              <div className="mt-1 text-xs text-slate-500">{hardware(n)} · {n.pods} pods</div>
               <div className="mt-3 space-y-2.5">
                 <Meter label="CPU" used={n.cpuUsed} total={n.cpuCores} fmt={(v) => `${v.toFixed(v < 10 ? 1 : 0)} cores`} />
                 <Meter label="Memory" used={n.memUsed} total={n.memBytes} fmt={gb} />

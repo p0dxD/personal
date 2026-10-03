@@ -35,10 +35,10 @@ export interface Site {
 }
 
 export interface ClusterNode {
-  name: string;
+  /** A generic label ("control plane", "worker 1", "GPU node"): no host names. */
+  label: string;
   role: "control-plane" | "worker";
   arch: string;
-  os: string;
   ready: boolean;
   pods: number;
   cpuCores: number;
@@ -62,13 +62,14 @@ export interface LiveStats {
   timeZone: string;
   delivery30d: Delivery;
   sites: Site[];
-  cluster: { distribution: string; version: string; pods: number; apps: number; nodes: ClusterNode[] };
+  cluster: { pods: number; apps: number; nodes: ClusterNode[] };
   recent: ReleaseEvent[];
 }
 
+// An in-cluster-only port: the stats are not reachable from the internet.
 const STATS_URL =
   process.env.RENDIMIENTO_STATS_URL ??
-  "http://rendimiento.rendimiento-system.svc.cluster.local/api/public/stats";
+  "http://rendimiento.rendimiento-system.svc.cluster.local:8081/api/public/stats";
 
 export async function getLiveStats(): Promise<LiveStats | null> {
   try {

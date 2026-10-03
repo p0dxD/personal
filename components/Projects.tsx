@@ -51,40 +51,28 @@ const inProgress = [
 
 const infrastructure = [
   {
-    name: "K3s Home Lab",
+    name: "Self-Hosted Kubernetes",
     description:
-      "Six-node ARM64 Kubernetes cluster running k3s: five Raspberry Pi 4s (8 GB each; one control plane, four workers) plus an NVIDIA Jetson Orin Nano for GPU work, with about 120 pods across a dozen apps. Longhorn replicates block storage across nodes, MinIO provides S3-compatible storage for backups, MetalLB hands out addresses on the home network, and a private registry holds every image.",
-    tags: ["k3s", "Raspberry Pi", "Longhorn", "MinIO", "MetalLB", "ARM64"],
+      "A multi-node ARM64 Kubernetes cluster I built and run myself: Raspberry Pi 4s plus an NVIDIA Jetson for GPU work, with distributed block storage, object storage and a private image registry. Every site on this page is served from it.",
+    tags: ["Kubernetes", "ARM64", "Raspberry Pi", "Distributed storage", "Self-hosted"],
   },
   {
     name: "CI/CD with rendimiento.ai",
     description:
-      "Every app here ships through rendimiento.ai, the platform I built to replace Jenkins and ArgoCD. A push runs tests and builds as Kubernetes pods; images build on a BuildKit pool spread across the workers with a shared registry cache, and only the services whose code changed are rebuilt. Releases are pinned by image digest, deployed and self-healed by a controller, and roll back in one click. Cluster software is installed from a GitOps repo, and Renovate keeps dependencies current.",
-    tags: ["rendimiento.ai", "Go", "BuildKit", "GitOps", "Renovate", "Kubernetes"],
+      "Every app here ships through rendimiento.ai, the platform I built: each push is tested, built and released automatically, then watched; a release that breaks something is rolled back on its own, and I get an email about it.",
+    tags: ["rendimiento.ai", "Go", "GitOps", "CI/CD", "Kubernetes"],
   },
   {
-    name: "AI Inference Node",
+    name: "Edge AI Inference",
     description:
-      "NVIDIA Jetson Orin Nano (8 GB, 1024-core Ampere GPU) joined to the cluster as its GPU node. Runs Ollama serving llama3.2:3b with CUDA through the NVIDIA container runtime; an app gets the GPU with one line in its deploy file. JobSentry and Wellness Portal call it over the cluster's internal network: no external API costs, and no data leaves the home lab.",
-    tags: ["NVIDIA Jetson", "Ollama", "LLM", "Edge AI", "CUDA", "Kubernetes"],
+      "An NVIDIA Jetson Orin Nano in the cluster runs local LLM inference with GPU acceleration for JobSentry and Wellness Portal: no external API costs, and no data leaves the home lab.",
+    tags: ["NVIDIA Jetson", "Ollama", "LLM", "CUDA", "Edge AI"],
   },
   {
-    name: "Observability Stack",
+    name: "Observability & Automation",
     description:
-      "VictoriaMetrics (a Prometheus-compatible stack with vmagent, vmalert and Alertmanager) and Grafana, installed with Helm, track every node, pod and Longhorn volume. Grafana stays on the home network only. Umami provides privacy-first analytics for the public sites, and a Hajimari start page links every internal tool.",
-    tags: ["VictoriaMetrics", "Grafana", "Alertmanager", "Umami", "Helm"],
-  },
-  {
-    name: "Automation & Resilience",
-    description:
-      "Ansible manages every node. A weekly timer applies OS updates one node at a time (health check, cordon, drain, reboot, wait for Ready) and emails a summary. A storm watcher checks National Weather Service alerts every 10 minutes; before severe weather it pauses deployments, scales databases down cleanly and powers the cluster off in order, control plane last.",
-    tags: ["Ansible", "systemd", "Python", "Pi-hole", "Automation"],
-  },
-  {
-    name: "Edge & Security",
-    description:
-      "Public traffic reaches the cluster only through Cloudflare's proxy; ingress-nginx and cert-manager serve every site over HTTPS with Let's Encrypt certificates issued by DNS challenge. Secrets live in git encrypted with sealed-secrets, build pods run isolated from the cluster and home network, and the rendimiento dashboard signs in through GitHub.",
-    tags: ["Cloudflare", "cert-manager", "ingress-nginx", "Sealed Secrets", "Let's Encrypt"],
+      "Metrics, dashboards and alerting for every node and app, uptime checks every minute, privacy-first web analytics, and automated maintenance that keeps the cluster patched without manual work.",
+    tags: ["Monitoring", "Alerting", "Analytics", "Automation"],
   },
 ];
 

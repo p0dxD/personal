@@ -12,6 +12,12 @@ services:
     health: { path: / }
     # DATABASE_URL, RESEND_API_KEY, ... (kept in sync by its SealedSecret)
     secrets: [website-contact-secret]
+    # Moving to rendimiento's Postgres: the new one runs beside blog-postgres
+    # while this still points at the old (an explicit value wins over the
+    # injected one) until the data is copied.
+    needs: [postgres]
+    secretEnv:
+      DATABASE_URL: website-contact-secret/DATABASE_URL
 
   # The blog database: a ready-made image on its existing volume.
   - name: blog-postgres

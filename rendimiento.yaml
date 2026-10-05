@@ -12,27 +12,6 @@ services:
     health: { path: / }
     # DATABASE_URL, RESEND_API_KEY, ... (kept in sync by its SealedSecret)
     secrets: [website-contact-secret]
-    # Moving to rendimiento's Postgres: the new one runs beside blog-postgres
-    # while this still points at the old (an explicit value wins over the
-    # injected one) until the data is copied.
+    # The blog database: rendimiento's Postgres (DATABASE_URL is injected and
+    # wins over the old value in website-contact-secret).
     needs: [postgres]
-    secretEnv:
-      DATABASE_URL: website-contact-secret/DATABASE_URL
-
-  # The blog database: a ready-made image on its existing volume.
-  - name: blog-postgres
-    image: postgres:15-alpine
-    port: 5432
-    health: { tcp: true }
-    env:
-      POSTGRES_DB: blog
-      POSTGRES_USER: blog
-      PGDATA: /var/lib/postgresql/data/pgdata
-    secretEnv:
-      POSTGRES_PASSWORD: website-contact-secret/POSTGRES_PASSWORD
-    volume:
-      existingClaim: blog-postgres-pvc
-      mount: /var/lib/postgresql/data
-    # Creates the schema on an empty database (db/schema.sql).
-    configFiles:
-      - { configMap: blog-postgres-init, mount: /docker-entrypoint-initdb.d }

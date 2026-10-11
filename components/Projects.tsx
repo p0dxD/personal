@@ -1,5 +1,13 @@
 const applications = [
   {
+    name: "Con Calma",
+    url: "https://goconcalma.com",
+    description:
+      "Bilingual (Spanish/English) travel guide to the calm months of 193 destinations across Mexico, Colombia, Peru, Canada, Portugal, Greece, Iceland, Japan and all 50 US states. Each place gets a 1–5 crowd index built from official tourism statistics and Wikipedia page views, ten years of Copernicus ERA5 climate data, its festivals and public holidays, and seasonal heads-ups like hurricane season or winter road closures. Interactive map, a page per destination that search engines and AI assistants can read, and opt-in email alerts when a place turns calm.",
+    tags: ["Java", "Spring Boot", "React", "MapLibre", "PostgreSQL", "Copernicus ERA5"],
+    status: "Live",
+  },
+  {
     name: "JobSentry",
     url: "https://jobsentry.net",
     description:

@@ -15,3 +15,8 @@ services:
     # The blog database: rendimiento's Postgres (DATABASE_URL is injected and
     # wins over the old value in website-contact-secret).
     needs: [postgres]
+
+# Traces for rendimiento's Universe: the OpenTelemetry Node agent times every
+# request, query and call (routes and queries show on the Universe page). The
+# app's own moments come with the observa library once it is on npm.
+observe: true

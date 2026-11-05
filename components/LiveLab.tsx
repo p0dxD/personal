@@ -97,7 +97,7 @@ export default async function LiveLab() {
         <h2 className="text-4xl font-bold gradient-text">Live from the Home Lab</h2>
         <p className="mx-auto mt-3 max-w-xl text-slate-400">
           Real numbers from the cluster this page runs on, published every minute by{" "}
-          <a href="https://github.com/p0dxD/rendimiento.ai" target="_blank" rel="noopener noreferrer" className="text-violet-300 hover:text-violet-200">rendimiento.ai</a>,
+          <a href="https://github.com/rendimiento-ai/rendimiento" target="_blank" rel="noopener noreferrer" className="text-violet-300 hover:text-violet-200">rendimiento.ai</a>,
           the CI/CD platform I built. Updated {updated}.
         </p>
       </div>
